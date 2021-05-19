@@ -1,4 +1,4 @@
-package com.example.newspaper
+package com.example.newspaper4
 
 import org.junit.Test
 

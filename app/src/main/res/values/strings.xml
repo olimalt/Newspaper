@@ -1,6 +1,11 @@
 <resources>
-    <string name="app_name">Newspaper</string>
-    <string name="title_actualite">Actualité</string>
-    <string name="title_recherche">Recherche</string>
-    <string name="title_articles">Articles</string>
+    <string name="app_name">Newspaper4</string>
+    <string name="accueil">Accueil</string>
+    <string name="research">Rechercher</string>
+    <string name="list">Articles</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Fragment accueil</string>
+    <string name="hello_blank_fragment_list">Fragment list</string>
+    <string name="hello_blank_fragment_research">Fragement research</string>
+    <string name="date">Date...</string>
 </resources>
