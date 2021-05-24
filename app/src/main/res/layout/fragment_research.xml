@@ -7,30 +7,80 @@
     tools:context=".ResearchFragment">
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent" android:layout_height="match_parent">
-        <DatePicker
-            android:id="@+id/datePicker1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp" />
+
+        <Spinner
+            android:id="@+id/spinnerSortBy"
+            android:layout_width="359dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="192dp"
+            android:tag="Tier selon..."
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/title"
+            android:layout_width="359dp"
+            android:layout_height="59dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/titleTxt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/datePicker1"
-            android:layout_marginLeft="100dp"
-            android:text="Get Date" />
+            android:id="@+id/btnGetDateTo"
+            android:layout_width="267dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginEnd="40dp"
+            android:text="@string/btnGetDateTxt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
         <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/button1"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:textSize="18dp"/>
-    </RelativeLayout>
+            android:id="@+id/tvFrom"
+            android:layout_width="53dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="72dp"
+            android:text="From :"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTo"
+            android:layout_width="53dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="120dp"
+            android:text="To :"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnGetDateFrom"
+            android:layout_width="267dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="40dp"
+            android:text="@string/btnGetDateTxt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/btnResearch"
+            android:layout_width="202dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="104dp"
+            android:layout_marginTop="104dp"
+            android:text="@string/btnResearchTxt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerSortBy" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

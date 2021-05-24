@@ -8,4 +8,14 @@
     <string name="hello_blank_fragment_list">Fragment list</string>
     <string name="hello_blank_fragment_research">Fragement research</string>
     <string name="date">Date...</string>
+    <string name="txtSelection">Selectionnez la date</string>
+    <string name="btnGetDateTxt">Select</string>
+    <string name="titleTxt">Titre ...</string>
+    <string name="btnResearchTxt">Rechercher</string>
+
+    <string-array name="sortBy">
+        <item>relevancy</item>
+        <item>popularity</item>
+        <item>publishedAt</item>
+    </string-array>
 </resources>

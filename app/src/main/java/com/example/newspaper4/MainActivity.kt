@@ -1,10 +1,15 @@
 package com.example.newspaper4
 
+import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.DatePicker
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_research.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +28,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 menuItem.itemId== R.id.navigationRecherche -> {
                     loadFragment(ResearchFragment())
+
                     return@setOnNavigationItemSelectedListener true
                 }
                 menuItem.itemId== R.id.navigationListe -> {
@@ -32,6 +38,8 @@ class MainActivity : AppCompatActivity() {
                 else -> return@setOnNavigationItemSelectedListener false
             }
         }
+
+
 
 
     }
