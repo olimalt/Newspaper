@@ -12,6 +12,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_research.*
 import kotlinx.coroutines.*
@@ -33,7 +34,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class ResearchFragment : Fragment() {
 
-
+    private lateinit var title : TextInputEditText
     private lateinit var tvFrom: TextView
     private lateinit var tvTo: TextView
     private lateinit var btnGetDateFrom: Button
@@ -50,6 +51,9 @@ class ResearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val fragMgr: FragmentManager? = activity?.supportFragmentManager
+
+        //On créer les variables pour exploiter l'interface (liaison)
+        title = view.findViewById(R.id.title)
         tvFrom = view.findViewById(R.id.tvFrom)
         tvTo = view.findViewById(R.id.tvTo)
         btnGetDateFrom = view.findViewById<Button>(R.id.btnGetDateFrom)
@@ -103,23 +107,18 @@ class ResearchFragment : Fragment() {
             Coroutines.main { }
 
         }
-
-
     }
 
     object Coroutines {
 
         fun main(work: suspend (() -> Unit)) {
             GlobalScope.launch {
-            val api = GestionNewsAPI()
+                //var titleTexte = view.findViewById(R.id.title)
+            val api = GestionNewsAPI() //TODO
             api.makeRequest()
             }
         }
     }
-
-
-
-
 }
 
 
