@@ -5,20 +5,18 @@ import okhttp3.Request
 import okhttp3.Response
 
 //https://kotlinlang.org/docs/classes.html
-class GestionNewsAPI (){   // (titre: String)
+class GestionNewsAPI (datefrom : String,dateto : String,title: String,sortby: String) { //:  AsyncTask<String, String, String>()
 
     //***Champs***//
     private var apiKey: String = "" //Clef API Yanis
-    private var url: String = ""
+    private var url: String =
+        "https://newsapi.org/v2/everything?q="+title+"&from="+datefrom+"&to="+dateto+"&sortBy="+sortby+"&apiKey=fb291664db1f489c8b390fc4fcc91dd8"
     private var statut: String? = null
     private var articles: List<Article>? = null
-    private var titreRecherche = "Apple"
 
     //***Constructeur***//
     init {
         apiKey = "fb291664db1f489c8b390fc4fcc91dd8"
-        titreRecherche = "Apple" //titre
-        url = "https://newsapi.org/v2/everything?q=${titreRecherche}Apple&from=2021-05-23&sortBy=popularity&apiKey=${apiKey}"
     }
 
     //***Fonctions***//
@@ -45,4 +43,5 @@ class GestionNewsAPI (){   // (titre: String)
             return "false"
         }
     }
+
 }

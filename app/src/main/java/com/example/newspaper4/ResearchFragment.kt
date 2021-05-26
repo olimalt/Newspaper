@@ -34,7 +34,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class ResearchFragment : Fragment() {
 
-    private lateinit var title : TextInputEditText
+
     private lateinit var tvFrom: TextView
     private lateinit var tvTo: TextView
     private lateinit var btnGetDateFrom: Button
@@ -51,9 +51,6 @@ class ResearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val fragMgr: FragmentManager? = activity?.supportFragmentManager
-
-        //On créer les variables pour exploiter l'interface (liaison)
-        title = view.findViewById(R.id.title)
         tvFrom = view.findViewById(R.id.tvFrom)
         tvTo = view.findViewById(R.id.tvTo)
         btnGetDateFrom = view.findViewById<Button>(R.id.btnGetDateFrom)
@@ -83,7 +80,7 @@ class ResearchFragment : Fragment() {
             val dpd = DatePickerDialog(
                 view.context,
                 DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                    btnGetDateFrom.text = "Date :$mDay/$mMonth/$mYear"
+                    btnGetDateFrom.text = "$mYear-$mMonth-$mDay"
                 },
                 year,
                 month,
@@ -95,7 +92,7 @@ class ResearchFragment : Fragment() {
             val dpd = DatePickerDialog(
                 view.context,
                 DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                    btnGetDateTo.text = "Date :$mDay/$mMonth/$mYear"
+                    btnGetDateTo.text = "$mYear-$mMonth-$mDay"
                 },
                 year,
                 month,
@@ -104,22 +101,28 @@ class ResearchFragment : Fragment() {
             dpd.show()
         }
         btnResearch.setOnClickListener {
-            Coroutines.main { }
+            Coroutines.main(view) { }
 
         }
+
+
     }
 
     object Coroutines {
 
-        fun main(work: suspend (() -> Unit)) {
+        fun main(view: View, work: suspend (() -> Unit)) {
             GlobalScope.launch {
-                //var titleTexte = view.findViewById(R.id.title)
-            val api = GestionNewsAPI() //TODO
-            api.makeRequest()
+                val dateFrom = view.findViewById<Button>(R.id.btnGetDateFrom)?.text.toString()
+                val dateTo = view.findViewById<Button>(R.id.btnGetDateTo)?.text.toString()
+                val title = view.findViewById<TextInputEditText>(R.id.title).text.toString()
+                val sortBy = view.findViewById<Spinner>(R.id.spinnerSortBy)?.selectedItem.toString()
+                //println(btnGetDateFrom)
+                val api = GestionNewsAPI(dateFrom, dateTo, title, sortBy)
+                api.makeRequest()
+
             }
         }
+
+
     }
 }
-
-
-
