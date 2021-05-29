@@ -4,12 +4,13 @@ import java.util.*
 
 class Article {
 
-    var titre : String? = null
-    var auteur: String? = null
+    var source : Source? = null
+    var author: String? = null
+    var title : String? = null
     var description : String? = null
     var url : String? = null
-    var urlImage : String? = null
-    var contenu : String? = null
-    var dateParution : Date? = null
+    var urlToImage : String? = null
+    var publishedAt : String? = null
+    var content : String? = null
 
 }

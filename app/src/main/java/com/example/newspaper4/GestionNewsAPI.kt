@@ -1,8 +1,13 @@
 package com.example.newspaper4
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonArray
+import com.google.gson.JsonParser
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+
 
 //https://kotlinlang.org/docs/classes.html
 class GestionNewsAPI (datefrom : String,dateto : String,title: String,sortby: String) { //:  AsyncTask<String, String, String>()
@@ -13,6 +18,8 @@ class GestionNewsAPI (datefrom : String,dateto : String,title: String,sortby: St
         "https://newsapi.org/v2/everything?q="+title+"&from="+datefrom+"&to="+dateto+"&sortBy="+sortby+"&apiKey=fb291664db1f489c8b390fc4fcc91dd8"
     private var statut: String? = null
     private var articles: List<Article>? = null
+    private val gson = Gson()
+
 
     //***Constructeur***//
     init {
@@ -23,7 +30,13 @@ class GestionNewsAPI (datefrom : String,dateto : String,title: String,sortby: St
     fun makeRequest() {
         val okHTTpClient = OkHttpClient()
         val parsedResponse = parseResponse(okHTTpClient.newCall(createRequest()).execute())
+        val requete: Requete = gson.fromJson(parsedResponse, Requete::class.java)
 
+        //Si la requete c'est bien passé, on attribue les valeurs de la requête en tant que champs
+        if (requete != null && requete.status == "ok"){
+            statut = requete.status
+            articles = requete.articles
+        }
     }
 
     private fun createRequest(): Request {
