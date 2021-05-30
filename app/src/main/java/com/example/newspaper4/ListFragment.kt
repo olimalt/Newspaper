@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import kotlin.math.ln
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +40,29 @@ class ListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_list, container, false)
+    }
+    private var articles: List<Article>? = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        val args = arguments
+        val listee = args?.getString("liste")
+
+        val requete: Requete = Gson().fromJson(listee, Requete::class.java)
+
+
+        articles = requete.articles
+            println(articles?.map { it.author })
+
+        println(' ')
+        println("Dans le fragment ListFragment !")
+        println(listee)
+
+
+        val adapter : GestionNewsAPIAdapter  = GestionNewsAPIAdapter( articles)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(LinearLayoutManager(view.context));
     }
 
     companion object {

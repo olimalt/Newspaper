@@ -19,6 +19,7 @@ class GestionNewsAPI (datefrom : String,dateto : String,title: String,sortby: St
     private var statut: String? = null
     private var articles: List<Article>? = null
     private var gson = Gson()
+    private lateinit var requete : Requete
 
 
     //***Constructeur***//
@@ -30,7 +31,7 @@ class GestionNewsAPI (datefrom : String,dateto : String,title: String,sortby: St
     fun makeRequest() {
         val okHTTpClient = OkHttpClient()
         val parsedResponse = parseResponse(okHTTpClient.newCall(createRequest()).execute())
-        val requete: Requete = gson.fromJson(parsedResponse, Requete::class.java)
+        requete= gson.fromJson(parsedResponse, Requete::class.java)
 
         //Si la requete c'est bien passé, on attribue les valeurs de la requête en tant que champs
         if (requete != null && requete.status == "ok"){
@@ -48,6 +49,10 @@ class GestionNewsAPI (datefrom : String,dateto : String,title: String,sortby: St
     fun getListArticles(): List<Article>? {
         print(articles)
         return articles
+    }
+    fun getRequete(): Requete {
+        print(requete)
+        return requete
     }
 
     private fun parseResponse(response: Response): String? {

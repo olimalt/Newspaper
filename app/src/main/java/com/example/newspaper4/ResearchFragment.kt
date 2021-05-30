@@ -12,8 +12,10 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_research.*
@@ -24,6 +26,7 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.internal.wait
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -106,8 +109,9 @@ class ResearchFragment : Fragment() {
         }
         btnResearch.setOnClickListener {
 
-            var liste : List<Article>? = null
-            val testr = Coroutines.main(view) {
+
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            val testr = Coroutines.main(view,transaction!!) {
                 println(Coroutines.getlist())
                 println("teeeesssstt")
             }
@@ -116,21 +120,7 @@ class ResearchFragment : Fragment() {
 
 
 
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
-            if (transaction != null) {
 
-                println(liste?.get(0))
-                println("tessst")
-                println(Coroutines.getlist())
-                //val bundle = Bundle()
-                //bundle.putString("",liste.)
-                transaction.replace(R.id.fragmentContainer,ListFragment())
-                transaction.disallowAddToBackStack()
-                transaction.commit()
-
-                var navigationview = view.findViewById<NavigationView>(R.id.bottomNavigationView)
-                navigationview?.menu?.getItem(3)?.isChecked = true
-            }
 
 
           /*  view.bottomNavigationView.loadFragment(ListFragment())
@@ -148,8 +138,9 @@ class ResearchFragment : Fragment() {
     object Coroutines {
 
 
-        fun main(view: View, work: suspend (() -> Unit)) {
+        fun main(view: View,transaction : FragmentTransaction, work: suspend (() -> Unit)) {
             GlobalScope.launch {
+
                 val dateFrom = view.findViewById<Button>(R.id.btnGetDateFrom)?.text.toString()
                 val dateTo = view.findViewById<Button>(R.id.btnGetDateTo)?.text.toString()
                 val title = view.findViewById<TextInputEditText>(R.id.title).text.toString()
@@ -157,12 +148,27 @@ class ResearchFragment : Fragment() {
                 //println(btnGetDateFrom)
                 val api = GestionNewsAPI(dateFrom, dateTo, title, sortBy)
                 api.makeRequest()
-                setlist(api.getListArticles()!!)
+                var liste : String = Gson().toJson(api.getRequete())
 
+
+                //println(liste?.get(0))
+                //println("tessst")
+                //println(getlist())
+                val bundle = Bundle()
+                bundle.putString("liste",liste)
+                val listfragment : Fragment = ListFragment()
+                listfragment.arguments = bundle
+                transaction.replace(R.id.fragmentContainer,listfragment)
+                transaction.disallowAddToBackStack()
+                transaction.commit()
+                val navigationview = view.findViewById<NavigationView>(R.id.bottomNavigationView)
+                navigationview?.menu?.getItem(2)?.isChecked = true
+                }
             }
 
 
-        }
+
+
         private var d : List<Article>? =null
         fun setlist(list : List<Article>){
 
