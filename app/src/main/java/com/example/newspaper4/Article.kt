@@ -13,4 +13,5 @@ class Article {
     var publishedAt : String? = null
     var content : String? = null
 
+
 }

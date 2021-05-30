@@ -12,13 +12,17 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_research.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.test.withTestContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import okhttp3.internal.wait
 import java.util.*
 
 
@@ -101,14 +105,48 @@ class ResearchFragment : Fragment() {
             dpd.show()
         }
         btnResearch.setOnClickListener {
-            Coroutines.main(view) { }
 
+            var liste : List<Article>? = null
+            val testr = Coroutines.main(view) {
+                println(Coroutines.getlist())
+                println("teeeesssstt")
+            }
+
+
+
+
+
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            if (transaction != null) {
+
+                println(liste?.get(0))
+                println("tessst")
+                println(Coroutines.getlist())
+                //val bundle = Bundle()
+                //bundle.putString("",liste.)
+                transaction.replace(R.id.fragmentContainer,ListFragment())
+                transaction.disallowAddToBackStack()
+                transaction.commit()
+
+                var navigationview = view.findViewById<NavigationView>(R.id.bottomNavigationView)
+                navigationview?.menu?.getItem(3)?.isChecked = true
+            }
+
+
+          /*  view.bottomNavigationView.loadFragment(ListFragment())
+            ArtistArrayAdapter adapter = new GestionNewsAPIAdapter( artists);
+            recyclerView = (RecyclerView) findViewById(R.id.cardList);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+*/
         }
 
 
     }
 
     object Coroutines {
+
 
         fun main(view: View, work: suspend (() -> Unit)) {
             GlobalScope.launch {
@@ -119,9 +157,22 @@ class ResearchFragment : Fragment() {
                 //println(btnGetDateFrom)
                 val api = GestionNewsAPI(dateFrom, dateTo, title, sortBy)
                 api.makeRequest()
+                setlist(api.getListArticles()!!)
 
             }
+
+
         }
+        private var d : List<Article>? =null
+        fun setlist(list : List<Article>){
+
+            d = list
+        }
+
+        fun getlist(): List<Article>? {
+            return d
+        }
+
 
 
     }

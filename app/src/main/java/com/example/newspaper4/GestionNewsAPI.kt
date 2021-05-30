@@ -18,7 +18,7 @@ class GestionNewsAPI (datefrom : String,dateto : String,title: String,sortby: St
         "https://newsapi.org/v2/everything?q="+title+"&from="+datefrom+"&to="+dateto+"&sortBy="+sortby+"&apiKey=fb291664db1f489c8b390fc4fcc91dd8"
     private var statut: String? = null
     private var articles: List<Article>? = null
-    private val gson = Gson()
+    private var gson = Gson()
 
 
     //***Constructeur***//
@@ -36,6 +36,7 @@ class GestionNewsAPI (datefrom : String,dateto : String,title: String,sortby: St
         if (requete != null && requete.status == "ok"){
             statut = requete.status
             articles = requete.articles
+            println(articles?.map { it.author })
         }
     }
 
@@ -43,6 +44,10 @@ class GestionNewsAPI (datefrom : String,dateto : String,title: String,sortby: St
         return Request.Builder()
             .url(url)
             .build()
+    }
+    fun getListArticles(): List<Article>? {
+        print(articles)
+        return articles
     }
 
     private fun parseResponse(response: Response): String? {
