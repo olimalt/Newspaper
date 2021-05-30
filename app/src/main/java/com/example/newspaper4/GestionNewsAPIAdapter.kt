@@ -28,7 +28,8 @@ class GestionNewsAPIAdapter (private var gestionewsapi: List<Article>?) :
         //gestionewsapi?.let { (holder as ListHolder).bind(it.get(position)) }
         val currentItem = gestionewsapi?.get(position)
         if (currentItem != null) {
-            holder.imageView.setImageURI(currentItem.urlToImage?.toUri())
+            Picasso.get().load(currentItem.urlToImage).into(holder.imageView)
+            //holder.imageView.setImageURI(currentItem.urlToImage?.toUri())
             holder.description.text = currentItem.description
             holder.date.text = currentItem.publishedAt
         }
