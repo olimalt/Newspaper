@@ -16,6 +16,9 @@ class GestionNewsAPI (datefrom : String,dateto : String,title: String,sortby: St
     private var apiKey: String = "" //Clef API Yanis
     private var url: String =
         "https://newsapi.org/v2/everything?q="+title+"&from="+datefrom+"&to="+dateto+"&sortBy="+sortby+"&apiKey=fb291664db1f489c8b390fc4fcc91dd8"
+    private var urlHeadlines: String =
+        "https://newsapi.org/v2/top-headlines?country=fr&apiKey=fb291664db1f489c8b390fc4fcc91dd8"
+
     private var statut: String? = null
     private var articles: List<Article>? = null
     private var gson = Gson()
@@ -30,7 +33,7 @@ class GestionNewsAPI (datefrom : String,dateto : String,title: String,sortby: St
     //***Fonctions***//
     fun makeRequest() {
         val okHTTpClient = OkHttpClient()
-        val parsedResponse = parseResponse(okHTTpClient.newCall(createRequest()).execute())
+        val parsedResponse = parseResponse(okHTTpClient.newCall(createRequest(url)).execute())
         requete= gson.fromJson(parsedResponse, Requete::class.java)
 
         //Si la requete c'est bien passé, on attribue les valeurs de la requête en tant que champs
@@ -41,17 +44,31 @@ class GestionNewsAPI (datefrom : String,dateto : String,title: String,sortby: St
         }
     }
 
-    private fun createRequest(): Request {
+    fun getHeadlines(): Boolean {
+        val okHTTpClient = OkHttpClient()
+        val parsedResponse = parseResponse(okHTTpClient.newCall(createRequest(urlHeadlines)).execute())
+        requete= gson.fromJson(parsedResponse, Requete::class.java)
+
+        //Si la requete c'est bien passé, on attribue les valeurs de la requête en tant que champs
+        if (requete != null && requete.status == "ok"){
+            statut = requete.status
+            articles = requete.articles
+            println(articles?.map { it.author })
+        }
+        return true
+    }
+
+    private fun createRequest(url : String): Request {
         return Request.Builder()
             .url(url)
             .build()
     }
     fun getListArticles(): List<Article>? {
-        print(articles)
+        //print(articles)
         return articles
     }
     fun getRequete(): Requete {
-        print(requete)
+        //print(requete)
         return requete
     }
 

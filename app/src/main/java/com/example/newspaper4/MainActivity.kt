@@ -43,7 +43,8 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    private fun loadFragment(fragment: Fragment){
+
+    fun loadFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction().also {fragmentTransaction ->
             fragmentTransaction.replace(R.id.fragmentContainer,fragment)
             fragmentTransaction.commit()

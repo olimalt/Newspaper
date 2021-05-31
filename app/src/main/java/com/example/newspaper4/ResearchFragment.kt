@@ -11,8 +11,10 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
@@ -110,8 +112,9 @@ class ResearchFragment : Fragment() {
         btnResearch.setOnClickListener {
 
 
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
-            val testr = Coroutines.main(view,transaction!!) {
+            //val transaction = activity?.supportFragmentManager?.beginTransaction()
+
+            val testr = Coroutines.main(view,activity!!) {
                 println(Coroutines.getlist())
                 println("teeeesssstt")
             }
@@ -138,7 +141,7 @@ class ResearchFragment : Fragment() {
     object Coroutines {
 
 
-        fun main(view: View,transaction : FragmentTransaction, work: suspend (() -> Unit)) {
+        fun main(view: View,transaction : FragmentActivity, work: suspend (() -> Unit)) {
             GlobalScope.launch {
 
                 val dateFrom = view.findViewById<Button>(R.id.btnGetDateFrom)?.text.toString()
@@ -150,19 +153,19 @@ class ResearchFragment : Fragment() {
                 api.makeRequest()
                 var liste : String = Gson().toJson(api.getRequete())
 
-
-                //println(liste?.get(0))
-                //println("tessst")
-                //println(getlist())
                 val bundle = Bundle()
                 bundle.putString("liste",liste)
                 val listfragment : Fragment = ListFragment()
                 listfragment.arguments = bundle
-                transaction.replace(R.id.fragmentContainer,listfragment)
-                transaction.disallowAddToBackStack()
-                transaction.commit()
-                val navigationview = view.findViewById<NavigationView>(R.id.bottomNavigationView)
-                navigationview?.menu?.getItem(2)?.isChecked = true
+
+                transaction?.supportFragmentManager?.beginTransaction()
+                    .replace(R.id.fragmentContainer,listfragment)
+                    .disallowAddToBackStack()
+                    .commit()
+
+
+                //val navigationview = transaction.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+                //navigationview.setSelectedItemId(R.id.navigationListe)
                 }
             }
 
